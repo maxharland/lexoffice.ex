@@ -6,7 +6,6 @@ defmodule LexOffice.Contacts do
   alias LexOffice.Connection
   import LexOffice.RequestBuilder
 
-
   @doc """
   Create a new contact
 
@@ -20,7 +19,8 @@ defmodule LexOffice.Contacts do
   {:ok, %LexOffice.Model.CreateContactResponse{}} on success
   {:error, info} on failure
   """
-  @spec create(Tesla.Env.client, LexOffice.Model.CreateContact.t, keyword()) :: {:ok, LexOffice.Model.CreateContactResponse.t} | {:error, Tesla.Env.t}
+  @spec create(Tesla.Env.client(), LexOffice.Model.CreateContact.t(), keyword()) ::
+          {:ok, LexOffice.Model.CreateContactResponse.t()} | {:error, Tesla.Env.t()}
   def create(connection, contact, _opts \\ []) do
     %{}
     |> method(:post)
@@ -29,10 +29,11 @@ defmodule LexOffice.Contacts do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> evaluate_response([
-      { 201, %LexOffice.Model.CreateContactResponse{}},
-      { 400, %LexOffice.Model.ErrorMessage{}},
-      { 403, %LexOffice.Model.ErrorMessage{}},
-      { 500, %LexOffice.Model.ErrorMessage{}}
+      {200, %LexOffice.Model.CreateContactResponse{}},
+      {201, %LexOffice.Model.CreateContactResponse{}},
+      {400, %LexOffice.Model.ErrorListMessage{}},
+      {403, %LexOffice.Model.ErrorMessage{}},
+      {500, %LexOffice.Model.ErrorMessage{}}
     ])
   end
 end

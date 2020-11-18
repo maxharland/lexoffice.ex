@@ -12,15 +12,16 @@ defmodule LexOffice.Model.CreateContact do
   ]
 
   @type t :: %__MODULE__{
-    :roles => LexOffice.Model.Contact.Roles.t,
-    :company => LexOffice.Model.Contact.Company.t,
-    :person => LexOffice.Model.Contact.Person.t,
-    :addresses => LexOffice.Model.Contact.Addresses.t,
-  }
+          :roles => LexOffice.Model.Contact.Roles.t(),
+          :company => LexOffice.Model.Contact.Company.t(),
+          :person => LexOffice.Model.Contact.Person.t(),
+          :addresses => LexOffice.Model.Contact.Addresses.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.CreateContact do
   import LexOffice.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:roles, :struct, LexOffice.Model.Contact.Roles, options)

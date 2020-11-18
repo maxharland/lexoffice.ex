@@ -10,9 +10,9 @@ defmodule LexOffice.Model.CreateInvoiceResponse do
   ]
 
   @type t :: %__MODULE__{
-    :id => String.t,
-    :resourceUri => String.t
-  }
+          :id => String.t(),
+          :resourceUri => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.CreateInvoiceResponse do
@@ -20,4 +20,3 @@ defimpl Poison.Decoder, for: LexOffice.Model.CreateInvoiceResponse do
     value
   end
 end
-

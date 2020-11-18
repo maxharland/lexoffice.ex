@@ -17,26 +17,26 @@ defmodule LexOffice.Model.Invoice.LineItem do
   ]
 
   @type t :: %__MODULE__{
-    :id => String.t,
-    :type => String.t,
-    :name => String.t,
-    :description => String.t,
-    :quantity => Float.t,
-    :unitName => String.t,
-    :unitPrice => LexOffice.Model.Invoice.LineItem.UnitPrice.t,
-    :discountPercentage => Float.t,
-    :lineItemAmount => Float.t
-  }
+          :id => String.t(),
+          :type => String.t(),
+          :name => String.t(),
+          :description => String.t(),
+          :quantity => Float.t(),
+          :unitName => String.t(),
+          :unitPrice => LexOffice.Model.Invoice.LineItem.UnitPrice.t(),
+          :discountPercentage => Float.t(),
+          :lineItemAmount => Float.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.Invoice.LineItem do
   import LexOffice.Deserializer
+
   def decode(value, options) do
     value
     |> deserialize(:unitPrice, :struct, LexOffice.Model.Invoice.LineItem.UnitPrice, options)
   end
 end
-
 
 defmodule LexOffice.Model.Invoice.LineItem.UnitPrice do
   @moduledoc """
@@ -52,11 +52,11 @@ defmodule LexOffice.Model.Invoice.LineItem.UnitPrice do
   ]
 
   @type t :: %__MODULE__{
-    :currency => Float.t,
-    :netAmount => Float.t,
-    :grossAmount => Float.t,
-    :taxRatePercentage => Float.t
-  }
+          :currency => Float.t(),
+          :netAmount => Float.t(),
+          :grossAmount => Float.t(),
+          :taxRatePercentage => Float.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.Invoice.LineItem.UnitPrice do
@@ -64,7 +64,6 @@ defimpl Poison.Decoder, for: LexOffice.Model.Invoice.LineItem.UnitPrice do
     value
   end
 end
-
 
 defmodule LexOffice.Model.Invoice.TotalPrice do
   @moduledoc """
@@ -82,13 +81,13 @@ defmodule LexOffice.Model.Invoice.TotalPrice do
   ]
 
   @type t :: %__MODULE__{
-    :currency => Float.t,
-    :totalNetAmount => Float.t,
-    :totalGrossAmount => Float.t,
-    :totalTaxAmount => Float.t,
-    :totalDiscountAbsolute => Float.t | nil,
-    :totalDiscountPercentage => Float.t | nil
-  }
+          :currency => Float.t(),
+          :totalNetAmount => Float.t(),
+          :totalGrossAmount => Float.t(),
+          :totalTaxAmount => Float.t(),
+          :totalDiscountAbsolute => Float.t() | nil,
+          :totalDiscountPercentage => Float.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TotalPrice do
@@ -96,7 +95,6 @@ defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TotalPrice do
     value
   end
 end
-
 
 defmodule LexOffice.Model.Invoice.TaxAmount do
   @moduledoc """
@@ -111,10 +109,10 @@ defmodule LexOffice.Model.Invoice.TaxAmount do
   ]
 
   @type t :: %__MODULE__{
-    :taxRatePercentage => Float.t,
-    :taxAmount => Float.t,
-    :netAmount => Float.t
-  }
+          :taxRatePercentage => Float.t(),
+          :taxAmount => Float.t(),
+          :netAmount => Float.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TaxAmount do
@@ -122,7 +120,6 @@ defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TaxAmount do
     value
   end
 end
-
 
 defmodule LexOffice.Model.Invoice.TaxConditions do
   @moduledoc """
@@ -136,9 +133,9 @@ defmodule LexOffice.Model.Invoice.TaxConditions do
   ]
 
   @type t :: %__MODULE__{
-    :taxType => String.t,
-    :taxTypeNote => String.t | nil
-  }
+          :taxType => String.t(),
+          :taxTypeNote => String.t() | nil
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TaxConditions do
@@ -146,7 +143,6 @@ defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TaxConditions do
     value
   end
 end
-
 
 defmodule LexOffice.Model.Invoice.PaymentConditions do
   @moduledoc """
@@ -160,9 +156,9 @@ defmodule LexOffice.Model.Invoice.PaymentConditions do
   ]
 
   @type t :: %__MODULE__{
-    :paymentTermLabel => String.t,
-    :paymentTermDuration => Integer.t
-  }
+          :paymentTermLabel => String.t(),
+          :paymentTermDuration => Integer.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.Invoice.PaymentConditions do
@@ -170,7 +166,6 @@ defimpl Poison.Decoder, for: LexOffice.Model.Invoice.PaymentConditions do
     value
   end
 end
-
 
 defmodule LexOffice.Model.Invoice.ShippingConditions do
   @moduledoc """
@@ -185,10 +180,10 @@ defmodule LexOffice.Model.Invoice.ShippingConditions do
   ]
 
   @type t :: %__MODULE__{
-    :shippingDate => DateTime.t,
-    :shippingEndDate => DateTime.t | nil,
-    :shippingType => String.t
-  }
+          :shippingDate => DateTime.t(),
+          :shippingEndDate => DateTime.t() | nil,
+          :shippingType => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.Invoice.ShippingConditions do
@@ -197,7 +192,6 @@ defimpl Poison.Decoder, for: LexOffice.Model.Invoice.ShippingConditions do
   end
 end
 
-
 defmodule LexOffice.Model.InvoiceFileIdResponse do
   @moduledoc """
   Represents an Invoice Payment Conditions.
@@ -205,12 +199,12 @@ defmodule LexOffice.Model.InvoiceFileIdResponse do
 
   @derive [Poison.Encoder]
   defstruct [
-    :documentFileId,
+    :documentFileId
   ]
 
   @type t :: %__MODULE__{
-    :documentFileId => String.t,
-  }
+          :documentFileId => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.InvoiceFileIdResponse do

@@ -13,8 +13,8 @@ defmodule LexOffice.Model.ErrorMessage do
   ]
 
   @type t :: %__MODULE__{
-    :message => String.t
-  }
+          :message => String.t()
+        }
 end
 
 defimpl Poison.Decoder, for: LexOffice.Model.ErrorMessage do
@@ -23,3 +23,51 @@ defimpl Poison.Decoder, for: LexOffice.Model.ErrorMessage do
   end
 end
 
+defmodule LexOffice.Model.ErrorListMessage do
+  @moduledoc """
+  The structure with additional information about the result of the API request.
+  """
+
+  @derive [Poison.Encoder]
+  defstruct [
+    :IssueList
+  ]
+
+  @type t :: %__MODULE__{
+          :IssueList => list(LexOffice.Model.ErrorListEntry.t())
+        }
+end
+
+defimpl Poison.Decoder, for: LexOffice.Model.ErrorListMessage do
+  import LexOffice.Deserializer
+
+  def decode(value, options) do
+    value
+    |> deserialize(:IssueList, :list, LexOffice.Model.ErrorListEntry, options)
+  end
+end
+
+defmodule LexOffice.Model.ErrorListEntry do
+  @moduledoc """
+  The structure with additional information about the result of the API request.
+  """
+
+  @derive [Poison.Encoder]
+  defstruct [
+    :i18nKey,
+    :source,
+    :type
+  ]
+
+  @type t :: %__MODULE__{
+          :i18nKey => String.t(),
+          :source => String.t(),
+          :type => String.t()
+        }
+end
+
+defimpl Poison.Decoder, for: LexOffice.Model.ErrorListEntry do
+  def decode(value, _options) do
+    value
+  end
+end
