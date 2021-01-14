@@ -4,7 +4,7 @@ defmodule LexOffice.Mixfile do
   def project do
     [
       app: :lexoffice,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.6",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -31,8 +31,8 @@ defmodule LexOffice.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:tesla, "~> 1.2"},
-      {:poison, "~> 3.0"},
+      {:tesla, "~> 1.4"},
+      {:poison, "~> 4.0"},
       {:gun, "~> 1.3"},
       {:hackney, "~> 1.13"},
       {:idna, "~> 6.0"}
