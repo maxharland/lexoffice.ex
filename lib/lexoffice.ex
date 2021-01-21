@@ -67,8 +67,8 @@ defmodule LexOffice do
 
   ## Returns
 
-  {:ok, %Model.ContactResponse{}} on success
-  {:error, info} on failure
+  `{:ok, %Model.ContactResponse{}}` on success
+  `{:error, info}` on failure
   """
   @spec create_contact(Model.CreateContact.t(), Tesla.Env.client() | nil) ::
           {:ok, Model.ContactResponse.t()} | {:error, Tesla.Env.t()}
@@ -99,8 +99,8 @@ defmodule LexOffice do
 
   ## Returns
 
-  {:ok, %Model.InvoiceResponse{}} on success
-  {:error, info} on failure
+  `{:ok, %Model.InvoiceResponse{}}` on success
+  `{:error, info}` on failure
   """
   @spec create_invoice(Model.CreateInvoice.t(), keyword(), Tesla.Env.client() | nil) ::
           {:ok, Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
@@ -135,8 +135,8 @@ defmodule LexOffice do
 
   ## Returns
 
-  {:ok, %Model.CreditNoteResponse{}} on success
-  {:error, info} on failure
+  `{:ok, %Model.CreditNoteResponse{}}` on success
+  `{:error, info}` on failure
   """
   @spec create_credit_note(Model.CreateCreditNote.t(), keyword(), Tesla.Env.client()) ::
           {:ok, Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
@@ -174,8 +174,8 @@ defmodule LexOffice do
 
   ## Returns
 
-  {:ok, %Model.InvoiceResponse{}} on success
-  {:error, info} on failure
+  `{:ok, %Model.InvoiceResponse{}}` on success
+  `{:error, info}` on failure
   """
   @spec get_invoice(String.t(), Tesla.Env.client() | nil) ::
           {:ok, Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
@@ -223,8 +223,8 @@ defmodule LexOffice do
 
   ## Returns
 
-  {:ok, %Model.CreditNoteResponse{}} on success
-  {:error, info} on failure
+  `{:ok, %Model.CreditNoteResponse{}}` on success
+  `{:error, info}` on failure
   """
   @spec get_credit_note(String.t(), Tesla.Env.client() | nil) ::
           {:ok, Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
