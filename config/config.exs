@@ -1,6 +1,24 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :lexoffice,
-  api_key: "c7a15062-17ed-4c88-abf8-aac9c7f35f01"
+if Mix.env() != :prod,
+  do:
+    config(:git_hooks,
+      verbose: true,
+      hooks: [
+        pre_commit: [
+          tasks: [
+            "mix clean",
+            "mix compile --warnings-as-errors",
+            "mix xref deprecated --abort-if-any",
+            "mix xref unreachable --abort-if-any",
+            "mix format --check-formatted",
+            "mix credo --strict",
+            "mix dialyzer",
+            "mix doctor --summary",
+            "mix test"
+          ]
+        ]
+      ]
+    )
+
+import_config "#{Mix.env()}.exs"

@@ -6,7 +6,7 @@ defmodule LexOffice.Deserializer do
   @doc """
   Update the provided model with a deserialization of a nested value
   """
-  @spec deserialize(struct(), :atom, :atom, struct(), keyword()) :: struct()
+  # @spec deserialize(struct(), :atom, :date | :list | :map | :struct, struct() | nil, keyword() | nil) :: map()
   def deserialize(model, field, :list, mod, options) do
     model
     |> Map.update!(field, &Poison.decode(&1, Keyword.merge(options, as: [struct(mod)])))

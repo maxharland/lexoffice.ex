@@ -88,7 +88,7 @@ defmodule LexOffice.RequestBuilder do
     |> Map.update!(
       :body,
       &Tesla.Multipart.add_field(&1, key, Poison.encode!(value),
-        headers: [{:Content - Type, "application/json"}]
+        headers: [{"content-type", "application/json"}]
       )
     )
   end
@@ -123,29 +123,59 @@ defmodule LexOffice.RequestBuilder do
 
   ## Returns
 
-  {:ok, struct} on success
-  {:error, term} on failure
+  `{:ok, struct()}` on success
+  `{:ok, Tesla.Env.t()}` on failure
+  `{:error, term}` on failure
   """
   @spec decode(Tesla.Env.t() | term(), false | struct() | [struct()]) ::
           {:ok, struct()} | {:ok, Tesla.Env.t()} | {:error, any}
   def decode(%Tesla.Env{} = env, false), do: {:ok, env}
+  def decode(%Tesla.Env{}, :ok), do: :ok
+  def decode(%Tesla.Env{body: body}, :bytes), do: {:ok, body}
+
+  def decode(%Tesla.Env{body: body}, :base64),
+    do:
+      {:ok,
+       body
+       |> Base.decode64!()
+       |> :erlang.iolist_to_binary()
+       |> :erlang.binary_to_list()}
+
   def decode(%Tesla.Env{body: body}, struct), do: Poison.decode(body, as: struct)
 
+  @doc """
+  Evaluates the Tesla response
+
+  ## Parameters
+
+  - arg1 {:atom, Tesla.Env.t} - The response object
+  - arg2 list - List of Tuples matching something like [{200, %Model.ErrorResponse{}}]
+
+  ## Returns
+
+  `{:ok, struct}` on success
+  `{:ok, Tesla.Env.t()}` on failure
+  `{:error, term}` on failure
+  """
+  @spec evaluate_response({:error, any()} | {:atom, Tesla.Env.t()}, list()) ::
+          {:ok, struct()} | {:ok, Tesla.Env.t()} | {:error, any}
   def evaluate_response({:ok, %Tesla.Env{} = env}, mapping) do
     resolve_mapping(env, mapping)
   end
 
   def evaluate_response({:error, _} = error, _), do: error
 
-  def resolve_mapping(env, mapping, default \\ nil)
+  defp resolve_mapping(env, mapping, default \\ nil)
 
-  def resolve_mapping(%Tesla.Env{status: status} = env, [{mapping_status, struct} | _], _)
-      when status == mapping_status do
+  defp resolve_mapping(%Tesla.Env{status: status} = env, [{mapping_status, struct} | _], _)
+       when status == mapping_status do
     decode(env, struct)
   end
 
-  def resolve_mapping(env, [{:default, struct} | tail], _), do: resolve_mapping(env, tail, struct)
-  def resolve_mapping(env, [_ | tail], struct), do: resolve_mapping(env, tail, struct)
-  def resolve_mapping(env, [], nil), do: {:error, env}
-  def resolve_mapping(env, [], struct), do: decode(env, struct)
+  defp resolve_mapping(env, [{:default, struct} | tail], _),
+    do: resolve_mapping(env, tail, struct)
+
+  defp resolve_mapping(env, [_ | tail], struct), do: resolve_mapping(env, tail, struct)
+  defp resolve_mapping(env, [], nil), do: {:error, env}
+  defp resolve_mapping(env, [], struct), do: decode(env, struct)
 end

@@ -1,6 +1,6 @@
-defmodule LexOffice.Model.CreateContactResponse do
+defmodule LexOffice.Model.InvoiceResponse do
   @moduledoc """
-  Object returned when creating an invoice.
+  Structure for holding invoice data.
   """
 
   @derive [Poison.Encoder]
@@ -15,7 +15,7 @@ defmodule LexOffice.Model.CreateContactResponse do
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.CreateContactResponse do
+defimpl Poison.Decoder, for: LexOffice.Model.InvoiceResponse do
   def decode(value, _options) do
     value
   end

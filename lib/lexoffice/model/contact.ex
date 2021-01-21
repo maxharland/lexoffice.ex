@@ -1,6 +1,6 @@
 defmodule LexOffice.Model.Contact.Role do
   @moduledoc """
-  Represents an Contact Role.
+  Structure for holding an existing Contact Role record.
   """
 
   @derive [Poison.Encoder]
@@ -21,7 +21,7 @@ end
 
 defmodule LexOffice.Model.Contact.Roles do
   @moduledoc """
-  Represents an Contact Roles.
+  Structure for holding a List of existing Contact Roles.
   """
 
   @derive [Poison.Encoder]
@@ -48,7 +48,7 @@ end
 
 defmodule LexOffice.Model.Contact.Person do
   @moduledoc """
-  Represents an Contact Person.
+  Structure for holding an existing contact.
   """
 
   @derive [Poison.Encoder]
@@ -88,7 +88,7 @@ defmodule LexOffice.Model.Contact.Company do
           :name => String.t(),
           :taxNumber => String.t(),
           :vatRegistrationId => String.t(),
-          :allowTaxFreeInvoices => Boolean.t()
+          :allowTaxFreeInvoices => boolean()
         }
 end
 
@@ -142,14 +142,4 @@ defmodule LexOffice.Model.Contact.Addresses do
           :billing => list(LexOffice.Model.Contact.Address.t()),
           :shipping => list(LexOffice.Model.Contact.Address.t()) | nil
         }
-end
-
-defimpl Poison.Decoder, for: LexOffice.Model.Contact.Roles do
-  import LexOffice.Deserializer
-
-  def decode(value, options) do
-    value
-    |> deserialize(:billing, :struct, LexOffice.Model.Contact.Address, options)
-    |> deserialize(:shipping, :struct, LexOffice.Model.Contact.Address, options)
-  end
 end

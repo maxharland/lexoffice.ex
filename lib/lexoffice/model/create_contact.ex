@@ -1,6 +1,6 @@
 defmodule LexOffice.Model.CreateContact do
   @moduledoc """
-
+  Structure for creating a new contact.
   """
 
   @derive [Poison.Encoder]

@@ -1,6 +1,6 @@
-defmodule LexOffice.Model.Invoice.LineItem do
+defmodule LexOffice.Model.LineItem do
   @moduledoc """
-  Represents an Invoice Line-Item.
+  Structure for describing invoice line item data.
   """
 
   @derive [Poison.Encoder]
@@ -21,26 +21,26 @@ defmodule LexOffice.Model.Invoice.LineItem do
           :type => String.t(),
           :name => String.t(),
           :description => String.t(),
-          :quantity => Float.t(),
+          :quantity => float(),
           :unitName => String.t(),
-          :unitPrice => LexOffice.Model.Invoice.LineItem.UnitPrice.t(),
-          :discountPercentage => Float.t(),
-          :lineItemAmount => Float.t()
+          :unitPrice => LexOffice.Model.LineItem.UnitPrice.t(),
+          :discountPercentage => float(),
+          :lineItemAmount => float()
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.Invoice.LineItem do
+defimpl Poison.Decoder, for: LexOffice.Model.LineItem do
   import LexOffice.Deserializer
 
   def decode(value, options) do
     value
-    |> deserialize(:unitPrice, :struct, LexOffice.Model.Invoice.LineItem.UnitPrice, options)
+    |> deserialize(:unitPrice, :struct, LexOffice.Model.LineItem.UnitPrice, options)
   end
 end
 
-defmodule LexOffice.Model.Invoice.LineItem.UnitPrice do
+defmodule LexOffice.Model.LineItem.UnitPrice do
   @moduledoc """
-  Represents an Invoice Total Price.
+  Structure for specifying invoice line item unit price data.
   """
 
   @derive [Poison.Encoder]
@@ -52,22 +52,22 @@ defmodule LexOffice.Model.Invoice.LineItem.UnitPrice do
   ]
 
   @type t :: %__MODULE__{
-          :currency => Float.t(),
-          :netAmount => Float.t(),
-          :grossAmount => Float.t(),
-          :taxRatePercentage => Float.t()
+          :currency => float(),
+          :netAmount => float(),
+          :grossAmount => float(),
+          :taxRatePercentage => float()
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.Invoice.LineItem.UnitPrice do
+defimpl Poison.Decoder, for: LexOffice.Model.LineItem.UnitPrice do
   def decode(value, _options) do
     value
   end
 end
 
-defmodule LexOffice.Model.Invoice.TotalPrice do
+defmodule LexOffice.Model.TotalPrice do
   @moduledoc """
-  Represents an Invoice Total Price.
+  Structure for specifying invoice line item total price data.
   """
 
   @derive [Poison.Encoder]
@@ -81,24 +81,24 @@ defmodule LexOffice.Model.Invoice.TotalPrice do
   ]
 
   @type t :: %__MODULE__{
-          :currency => Float.t(),
-          :totalNetAmount => Float.t(),
-          :totalGrossAmount => Float.t(),
-          :totalTaxAmount => Float.t(),
-          :totalDiscountAbsolute => Float.t() | nil,
-          :totalDiscountPercentage => Float.t() | nil
+          :currency => float(),
+          :totalNetAmount => float(),
+          :totalGrossAmount => float(),
+          :totalTaxAmount => float(),
+          :totalDiscountAbsolute => float() | nil,
+          :totalDiscountPercentage => float() | nil
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TotalPrice do
+defimpl Poison.Decoder, for: LexOffice.Model.TotalPrice do
   def decode(value, _options) do
     value
   end
 end
 
-defmodule LexOffice.Model.Invoice.TaxAmount do
+defmodule LexOffice.Model.TaxAmount do
   @moduledoc """
-  Represents an Invoice Tax Amount.
+  Structure for specifying invoice tax amount data.
   """
 
   @derive [Poison.Encoder]
@@ -109,21 +109,21 @@ defmodule LexOffice.Model.Invoice.TaxAmount do
   ]
 
   @type t :: %__MODULE__{
-          :taxRatePercentage => Float.t(),
-          :taxAmount => Float.t(),
-          :netAmount => Float.t()
+          :taxRatePercentage => float(),
+          :taxAmount => float(),
+          :netAmount => float()
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TaxAmount do
+defimpl Poison.Decoder, for: LexOffice.Model.TaxAmount do
   def decode(value, _options) do
     value
   end
 end
 
-defmodule LexOffice.Model.Invoice.TaxConditions do
+defmodule LexOffice.Model.TaxConditions do
   @moduledoc """
-  Represents an Invoice Tax Conditions.
+  Structure for specifying invoice tax condition data.
   """
 
   @derive [Poison.Encoder]
@@ -138,15 +138,15 @@ defmodule LexOffice.Model.Invoice.TaxConditions do
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.Invoice.TaxConditions do
+defimpl Poison.Decoder, for: LexOffice.Model.TaxConditions do
   def decode(value, _options) do
     value
   end
 end
 
-defmodule LexOffice.Model.Invoice.PaymentConditions do
+defmodule LexOffice.Model.PaymentConditions do
   @moduledoc """
-  Represents an Invoice Payment Conditions.
+  Structure for specifying invoice payment conditions.
   """
 
   @derive [Poison.Encoder]
@@ -157,19 +157,19 @@ defmodule LexOffice.Model.Invoice.PaymentConditions do
 
   @type t :: %__MODULE__{
           :paymentTermLabel => String.t(),
-          :paymentTermDuration => Integer.t()
+          :paymentTermDuration => integer()
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.Invoice.PaymentConditions do
+defimpl Poison.Decoder, for: LexOffice.Model.PaymentConditions do
   def decode(value, _options) do
     value
   end
 end
 
-defmodule LexOffice.Model.Invoice.ShippingConditions do
+defmodule LexOffice.Model.ShippingConditions do
   @moduledoc """
-  Represents an Invoice Shipping Conditions.
+  Structure for specifying invoice shipping conditions.
   """
 
   @derive [Poison.Encoder]
@@ -186,15 +186,15 @@ defmodule LexOffice.Model.Invoice.ShippingConditions do
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.Invoice.ShippingConditions do
+defimpl Poison.Decoder, for: LexOffice.Model.ShippingConditions do
   def decode(value, _options) do
     value
   end
 end
 
-defmodule LexOffice.Model.InvoiceFileIdResponse do
+defmodule LexOffice.Model.FileIdResponse do
   @moduledoc """
-  Represents an Invoice Payment Conditions.
+  Structure for holding File ID responses.
   """
 
   @derive [Poison.Encoder]
@@ -207,7 +207,7 @@ defmodule LexOffice.Model.InvoiceFileIdResponse do
         }
 end
 
-defimpl Poison.Decoder, for: LexOffice.Model.InvoiceFileIdResponse do
+defimpl Poison.Decoder, for: LexOffice.Model.FileIdResponse do
   def decode(value, _options) do
     value
   end

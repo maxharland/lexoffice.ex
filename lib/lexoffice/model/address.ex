@@ -1,6 +1,6 @@
 defmodule LexOffice.Model.Address do
   @moduledoc """
-  Represents an Address.
+  Structure for holding an existing Address record.
   """
 
   @derive [Poison.Encoder]

@@ -1,24 +1,28 @@
 # LexOffice
 
-Offers rudimentary Elixir bindings to LexOffice.
+This package implements the [LexOffice.de](https://lexoffice.de) API in Elixir.
+
+If you need more of their API, just launch a Pull Request.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `lexoffice` to your list of dependencies in `mix.exs`:
+This package can be installed by adding `lexoffice` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:lexoffice, "~> 0.1.1"}]
+  [{:lexoffice, "~> 0.1.2"}]
 end
 ```
 
-Configure the library with the following lines in your `config.exs`:
+## Configuration
+
+Put the following lines into your `config.exs` or better, into your environment
+configuration files like `test.exs`, `dev.exs` or `prod.exs.`.
 
 ```elixir
-config :lexoffice, api_key: "abcd"
+config :lexoffice, api_key: "<your api key>"
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/lexoffice](https://hexdocs.pm/lexoffice).
+## Documentation
+
+Documentation can be found at [https://hexdocs.pm/lexoffice](https://hexdocs.pm/lexoffice).
