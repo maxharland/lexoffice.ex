@@ -54,7 +54,6 @@ defmodule LexOffice do
   """
   import LexOffice.RequestBuilder
   alias LexOffice.Connection
-  alias LexOffice.Model
 
   @doc """
   Create a new contact.
@@ -66,12 +65,12 @@ defmodule LexOffice do
 
   ## Returns
 
-  - `{:ok, %Model.ContactResponse{}}` on success
+  - `{:ok, %LexOffice.Model.ContactResponse{}}` on success
   - `{:error, info}` on failure
   """
   @spec create_contact(LexOffice.Model.CreateContact.t(), Tesla.Env.client() | nil) ::
-          {:ok, Model.ContactResponse.t()} | {:error, Tesla.Env.t()}
-  def create_contact(%Model.CreateContact{} = contact, client \\ Connection.new()) do
+          {:ok, LexOffice.Model.ContactResponse.t()} | {:error, Tesla.Env.t()}
+  def create_contact(%LexOffice.Model.CreateContact{} = contact, client \\ Connection.new()) do
     %{}
     |> method(:post)
     |> url("/v1/contacts")
@@ -79,11 +78,11 @@ defmodule LexOffice do
     |> Enum.into([])
     |> (&Tesla.request(client, &1)).()
     |> evaluate_response([
-      {200, %Model.ContactResponse{}},
-      {201, %Model.ContactResponse{}},
-      {400, %Model.ErrorListResponse{}},
-      {403, %Model.ErrorResponse{}},
-      {500, %Model.ErrorResponse{}}
+      {200, %LexOffice.Model.ContactResponse{}},
+      {201, %LexOffice.Model.ContactResponse{}},
+      {400, %LexOffice.Model.ErrorListResponse{}},
+      {403, %LexOffice.Model.ErrorResponse{}},
+      {500, %LexOffice.Model.ErrorResponse{}}
     ])
   end
 
@@ -98,12 +97,16 @@ defmodule LexOffice do
 
   ## Returns
 
-  - `{:ok, %Model.InvoiceResponse{}}` on success
+  - `{:ok, %LexOffice.Model.InvoiceResponse{}}` on success
   - `{:error, info}` on failure
   """
   @spec create_invoice(LexOffice.Model.CreateInvoice.t(), keyword(), Tesla.Env.client() | nil) ::
-          {:ok, Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
-  def create_invoice(%Model.CreateInvoice{} = invoice, query \\ [], client \\ Connection.new()) do
+          {:ok, LexOffice.Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
+  def create_invoice(
+        %LexOffice.Model.CreateInvoice{} = invoice,
+        query \\ [],
+        client \\ Connection.new()
+      ) do
     optional_params = %{
       :finalize => :query
     }
@@ -116,10 +119,10 @@ defmodule LexOffice do
     |> Enum.into([])
     |> (&Tesla.request(client, &1)).()
     |> evaluate_response([
-      {201, %Model.InvoiceResponse{}},
-      {400, %Model.ErrorResponse{}},
-      {403, %Model.ErrorResponse{}},
-      {500, %Model.ErrorResponse{}}
+      {201, %LexOffice.Model.InvoiceResponse{}},
+      {400, %LexOffice.Model.ErrorResponse{}},
+      {403, %LexOffice.Model.ErrorResponse{}},
+      {500, %LexOffice.Model.ErrorResponse{}}
     ])
   end
 
@@ -134,13 +137,13 @@ defmodule LexOffice do
 
   ## Returns
 
-  - `{:ok, %Model.CreditNoteResponse{}}` on success
+  - `{:ok, %LexOffice.Model.CreditNoteResponse{}}` on success
   - `{:error, info}` on failure
   """
   @spec create_credit_note(LexOffice.Model.CreateCreditNote.t(), keyword(), Tesla.Env.client()) ::
-          {:ok, Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
+          {:ok, LexOffice.Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
   def create_credit_note(
-        %Model.CreateCreditNote{} = credit_note,
+        %LexOffice.Model.CreateCreditNote{} = credit_note,
         query \\ [],
         client \\ Connection.new()
       ) do
@@ -156,10 +159,10 @@ defmodule LexOffice do
     |> Enum.into([])
     |> (&Tesla.request(client, &1)).()
     |> evaluate_response([
-      {201, %Model.CreditNoteResponse{}},
-      {400, %Model.ErrorResponse{}},
-      {403, %Model.ErrorResponse{}},
-      {500, %Model.ErrorResponse{}}
+      {201, %LexOffice.Model.CreditNoteResponse{}},
+      {400, %LexOffice.Model.ErrorResponse{}},
+      {403, %LexOffice.Model.ErrorResponse{}},
+      {500, %LexOffice.Model.ErrorResponse{}}
     ])
   end
 
@@ -173,11 +176,11 @@ defmodule LexOffice do
 
   ## Returns
 
-  - `{:ok, %Model.InvoiceResponse{}}` on success
+  - `{:ok, %LexOffice.Model.InvoiceResponse{}}` on success
   - `{:error, info}` on failure
   """
   @spec get_invoice(String.t(), Tesla.Env.client() | nil) ::
-          {:ok, Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
+          {:ok, LexOffice.Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
   def get_invoice(id, client \\ Connection.new()) do
     file_id_response =
       %{}
@@ -186,10 +189,10 @@ defmodule LexOffice do
       |> Enum.into([])
       |> (&Tesla.request(client, &1)).()
       |> evaluate_response([
-        {200, %Model.FileIdResponse{}},
-        {400, %Model.ErrorResponse{}},
-        {403, %Model.ErrorResponse{}},
-        {500, %Model.ErrorResponse{}}
+        {200, %LexOffice.Model.FileIdResponse{}},
+        {400, %LexOffice.Model.ErrorResponse{}},
+        {403, %LexOffice.Model.ErrorResponse{}},
+        {500, %LexOffice.Model.ErrorResponse{}}
       ])
 
     case file_id_response do
@@ -201,10 +204,10 @@ defmodule LexOffice do
         |> (&Tesla.request(client, &1)).()
         |> evaluate_response([
           {200, :base64},
-          {400, %Model.ErrorResponse{}},
-          {404, %Model.ErrorResponse{}},
-          {403, %Model.ErrorResponse{}},
-          {500, %Model.ErrorResponse{}}
+          {400, %LexOffice.Model.ErrorResponse{}},
+          {404, %LexOffice.Model.ErrorResponse{}},
+          {403, %LexOffice.Model.ErrorResponse{}},
+          {500, %LexOffice.Model.ErrorResponse{}}
         ])
 
       other ->
@@ -222,11 +225,11 @@ defmodule LexOffice do
 
   ## Returns
 
-  - `{:ok, %Model.CreditNoteResponse{}}` on success
+  - `{:ok, %LexOffice.Model.CreditNoteResponse{}}` on success
   - `{:error, info}` on failure
   """
   @spec get_credit_note(String.t(), Tesla.Env.client() | nil) ::
-          {:ok, Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
+          {:ok, LexOffice.Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
   def get_credit_note(id, client \\ Connection.new()) do
     file_id_response =
       %{}
@@ -235,10 +238,10 @@ defmodule LexOffice do
       |> Enum.into([])
       |> (&Tesla.request(client, &1)).()
       |> evaluate_response([
-        {200, %Model.FileIdResponse{}},
-        {400, %Model.ErrorResponse{}},
-        {403, %Model.ErrorResponse{}},
-        {500, %Model.ErrorResponse{}}
+        {200, %LexOffice.Model.FileIdResponse{}},
+        {400, %LexOffice.Model.ErrorResponse{}},
+        {403, %LexOffice.Model.ErrorResponse{}},
+        {500, %LexOffice.Model.ErrorResponse{}}
       ])
 
     case file_id_response do
@@ -250,10 +253,10 @@ defmodule LexOffice do
         |> (&Tesla.request(client, &1)).()
         |> evaluate_response([
           {200, :base64},
-          {400, %Model.ErrorResponse{}},
-          {404, %Model.ErrorResponse{}},
-          {403, %Model.ErrorResponse{}},
-          {500, %Model.ErrorResponse{}}
+          {400, %LexOffice.Model.ErrorResponse{}},
+          {404, %LexOffice.Model.ErrorResponse{}},
+          {403, %LexOffice.Model.ErrorResponse{}},
+          {500, %LexOffice.Model.ErrorResponse{}}
         ])
 
       other ->
