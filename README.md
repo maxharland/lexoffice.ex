@@ -17,7 +17,7 @@ end
 ## Configuration
 
 Put the following lines into your `config.exs` or better, into your environment
-configuration files like `test.exs`, `dev.exs` or `prod.exs.`.
+configuration files like `test.exs`, `dev.exs` or `prod.exs`.
 
 ```elixir
 config :lexoffice, api_key: "<your api key>"
