@@ -16,7 +16,7 @@ defmodule LexOffice do
 
   ## Configuration
 
-  Put the following lines into your `config.exs` or better, into your environment configuration files like `test.exs`, `dev.exs` or `prod.exs.`.
+  Put the following lines into your `config.exs` or better, into your environment configuration files like `test.exs`, `dev.exs` or `prod.exs`.
 
   ```elixir
   config :lexoffice, api_key: "<your api key>"
@@ -61,16 +61,15 @@ defmodule LexOffice do
 
   ## Parameters
 
-  - connection (LexOffice.Connection): Connection to server
-  - contact (Model.CreateContact): Contact data
-  - opts (KeywordList): [optional] Optional parameters
+  - contact (LexOffice.Model.CreateContact): Contact data
+  - connection (LexOffice.Connection): [optional] Connection to server
 
   ## Returns
 
-  `{:ok, %Model.ContactResponse{}}` on success
-  `{:error, info}` on failure
+  - `{:ok, %Model.ContactResponse{}}` on success
+  - `{:error, info}` on failure
   """
-  @spec create_contact(Model.CreateContact.t(), Tesla.Env.client() | nil) ::
+  @spec create_contact(LexOffice.Model.CreateContact.t(), Tesla.Env.client() | nil) ::
           {:ok, Model.ContactResponse.t()} | {:error, Tesla.Env.t()}
   def create_contact(%Model.CreateContact{} = contact, client \\ Connection.new()) do
     %{}
@@ -93,16 +92,16 @@ defmodule LexOffice do
 
   ## Parameters
 
-  - connection (LexOffice.Connection): Connection to server
-  - invoice (Model.CreateInvoice): Invoice data
+  - invoice (LexOffice.Model.CreateInvoice): Invoice data
   - opts (KeywordList): [optional] Optional parameters
+  - connection (LexOffice.Connection): [optional] Connection to server
 
   ## Returns
 
-  `{:ok, %Model.InvoiceResponse{}}` on success
-  `{:error, info}` on failure
+  - `{:ok, %Model.InvoiceResponse{}}` on success
+  - `{:error, info}` on failure
   """
-  @spec create_invoice(Model.CreateInvoice.t(), keyword(), Tesla.Env.client() | nil) ::
+  @spec create_invoice(LexOffice.Model.CreateInvoice.t(), keyword(), Tesla.Env.client() | nil) ::
           {:ok, Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
   def create_invoice(%Model.CreateInvoice{} = invoice, query \\ [], client \\ Connection.new()) do
     optional_params = %{
@@ -129,16 +128,16 @@ defmodule LexOffice do
 
   ## Parameters
 
-  - connection (LexOffice.Connection): Connection to server
-  - credit_note (Model.CreateCreditNote): Credit-Note data
+  - credit_note (LexOffice.Model.CreateCreditNote): Credit-Note data
   - opts (KeywordList): [optional] Optional parameters
+  - connection (LexOffice.Connection): [optional] Connection to server
 
   ## Returns
 
-  `{:ok, %Model.CreditNoteResponse{}}` on success
-  `{:error, info}` on failure
+  - `{:ok, %Model.CreditNoteResponse{}}` on success
+  - `{:error, info}` on failure
   """
-  @spec create_credit_note(Model.CreateCreditNote.t(), keyword(), Tesla.Env.client()) ::
+  @spec create_credit_note(LexOffice.Model.CreateCreditNote.t(), keyword(), Tesla.Env.client()) ::
           {:ok, Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
   def create_credit_note(
         %Model.CreateCreditNote{} = credit_note,
@@ -169,13 +168,13 @@ defmodule LexOffice do
 
   ## Parameters
 
-  - connection (LexOffice.Connection): Connection to server
   - id (String): Invoice ID
+  - connection (LexOffice.Connection): [optional] Connection to server
 
   ## Returns
 
-  `{:ok, %Model.InvoiceResponse{}}` on success
-  `{:error, info}` on failure
+  - `{:ok, %Model.InvoiceResponse{}}` on success
+  - `{:error, info}` on failure
   """
   @spec get_invoice(String.t(), Tesla.Env.client() | nil) ::
           {:ok, Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
@@ -218,13 +217,13 @@ defmodule LexOffice do
 
   ## Parameters
 
-  - connection (LexOffice.Connection): Connection to server
   - id (String): CreditNote ID
+  - connection (LexOffice.Connection): [optional] Connection to server
 
   ## Returns
 
-  `{:ok, %Model.CreditNoteResponse{}}` on success
-  `{:error, info}` on failure
+  - `{:ok, %Model.CreditNoteResponse{}}` on success
+  - `{:error, info}` on failure
   """
   @spec get_credit_note(String.t(), Tesla.Env.client() | nil) ::
           {:ok, Model.CreditNoteResponse.t()} | {:error, Tesla.Env.t()}
