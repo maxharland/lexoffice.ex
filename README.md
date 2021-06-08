@@ -10,7 +10,7 @@ This package can be installed by adding `lexoffice` to your list of dependencies
 
 ```elixir
 def deps do
-  [{:lexoffice, "~> 0.1.2"}]
+  [{:lexoffice, "~> 0.1"}]
 end
 ```
 

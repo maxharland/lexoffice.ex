@@ -9,7 +9,7 @@ defmodule LexOffice do
   ```elixir
   def deps do
     [
-      {:lexoffice, "~> 0.1.2"}
+      {:lexoffice, "~> 0.1"}
     ]
   end
   ```
