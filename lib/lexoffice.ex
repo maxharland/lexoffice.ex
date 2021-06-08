@@ -180,8 +180,37 @@ defmodule LexOffice do
   - `{:error, info}` on failure
   """
   @spec get_invoice(String.t(), Tesla.Env.client() | nil) ::
-          {:ok, LexOffice.Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
+          {:ok, LexOffice.Model.Invoice.t()} | {:error, Tesla.Env.t()}
   def get_invoice(id, client \\ Connection.new()) do
+    %{}
+    |> method(:get)
+    |> url("/v1/invoices/#{id}")
+    |> Enum.into([])
+    |> (&Tesla.request(client, &1)).()
+    |> evaluate_response([
+      {200, %LexOffice.Model.InvoiceDetailsResponse{}},
+      {400, %LexOffice.Model.ErrorResponse{}},
+      {403, %LexOffice.Model.ErrorResponse{}},
+      {500, %LexOffice.Model.ErrorResponse{}}
+    ])
+  end
+
+  @doc """
+  Downloads a single invoice
+
+  ## Parameters
+
+  - id (String): Invoice ID
+  - connection (LexOffice.Connection): [optional] Connection to server
+
+  ## Returns
+
+  - `{:ok, %LexOffice.Model.InvoiceResponse{}}` on success
+  - `{:error, info}` on failure
+  """
+  @spec download_invoice(String.t(), Tesla.Env.client() | nil) ::
+          {:ok, LexOffice.Model.InvoiceResponse.t()} | {:error, Tesla.Env.t()}
+  def download_invoice(id, client \\ Connection.new()) do
     file_id_response =
       %{}
       |> method(:get)

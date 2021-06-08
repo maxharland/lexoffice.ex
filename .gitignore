@@ -24,3 +24,7 @@ lexoffice-*.tar
 
 # Ignore local test configuration
 /config/test.*
+
+# Ignore intellij
+.idea
+*.iml
