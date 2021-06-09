@@ -6,7 +6,7 @@ defmodule LexOffice.Mixfile do
   def project do
     [
       app: :lexoffice,
-      version: "0.1.6",
+      version: "0.1.7",
       elixir: "~> 1.7",
       source_url: @project_url,
       homepage_url: @project_url,
@@ -40,7 +40,7 @@ defmodule LexOffice.Mixfile do
   defp deps do
     [
       {:tesla, "~> 1.4"},
-      {:poison, "~> 4.0"},
+      {:poison, "~> 3.0"},
       {:ex_doc, "~> 0.19", only: :dev},
       {:doctor, "~> 0.17.0", only: :dev},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
