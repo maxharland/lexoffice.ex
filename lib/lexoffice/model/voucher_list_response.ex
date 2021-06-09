@@ -18,7 +18,7 @@ defmodule LexOffice.Model.VoucherListResponse do
 
   @type t :: %__MODULE__{
           :content => list(LexOffice.Model.Voucher.t()),
-          :first => bool(),
+          :first => boolean(),
           :last => boolean(),
           :totalPages => integer(),
           :totalElements => integer(),
