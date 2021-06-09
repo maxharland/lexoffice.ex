@@ -6,7 +6,7 @@ defmodule LexOffice.Mixfile do
   def project do
     [
       app: :lexoffice,
-      version: "0.1.3",
+      version: "0.1.4",
       elixir: "~> 1.7",
       source_url: @project_url,
       homepage_url: @project_url,
