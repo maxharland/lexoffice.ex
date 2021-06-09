@@ -2,32 +2,34 @@ defmodule LexOffice.Deserializer do
   @moduledoc """
   Helper functions for deserializing responses into models
   """
+  alias Poison.Decode
 
   @doc """
   Update the provided model with a deserialization of a nested value
   """
-  # @spec deserialize(struct(), :atom, :date | :list | :map | :struct, struct() | nil, keyword() | nil) :: map()
-  def deserialize(model, field, :list, mod, options) do
+  @spec deserialize(map(), atom(), :date | :list | :map | :struct, any(), keyword() | nil) ::
+          map()
+  def deserialize(model, field, :list, mod, options) when is_atom(field) do
     model
-    |> Map.update!(field, &Poison.decode(&1, Keyword.merge(options, as: [struct(mod)])))
+    |> Map.update!(field, &Decode.decode(&1, Keyword.merge(options, as: [struct(mod)])))
   end
 
-  def deserialize(model, field, :struct, mod, options) do
+  def deserialize(model, field, :struct, mod, options) when is_atom(field) do
     model
-    |> Map.update!(field, &Poison.decode(&1, Keyword.merge(options, as: struct(mod))))
+    |> Map.update!(field, &Decode.decode(&1, Keyword.merge(options, as: struct(mod))))
   end
 
-  def deserialize(model, field, :map, mod, options) do
+  def deserialize(model, field, :map, mod, options) when is_atom(field) do
     model
     |> Map.update!(
       field,
       &Map.new(&1, fn {key, val} ->
-        {key, Poison.decode(val, Keyword.merge(options, as: struct(mod)))}
+        {key, Decode.decode(val, Keyword.merge(options, as: struct(mod)))}
       end)
     )
   end
 
-  def deserialize(model, field, :date, _, _options) do
+  def deserialize(model, field, :date, _, _options) when is_atom(field) do
     value = Map.get(model, field)
 
     case is_binary(value) do

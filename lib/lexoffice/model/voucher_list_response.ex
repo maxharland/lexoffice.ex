@@ -17,7 +17,7 @@ defmodule LexOffice.Model.VoucherListResponse do
   ]
 
   @type t :: %__MODULE__{
-          :content => list(LexOffice.Model.Voucher),
+          :content => list(LexOffice.Model.Voucher.t()),
           :first => bool(),
           :last => boolean(),
           :totalPages => integer(),
@@ -33,6 +33,6 @@ defimpl Poison.Decoder, for: LexOffice.Model.VoucherListResponse do
 
   def decode(value, options) do
     value
-    |> deserialize(:content, :struct, LexOffice.Model.Voucher, options)
+    |> deserialize(:content, :list, LexOffice.Model.Voucher, options)
   end
 end

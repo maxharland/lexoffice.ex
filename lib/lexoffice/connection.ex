@@ -8,10 +8,10 @@ defmodule LexOffice.Connection do
   @doc "Creates a new API Connection for the given API Key by returning a pre-configured `Tesla` HTTP Client."
   @spec new(String.t() | nil) :: Tesla.Env.client()
   def new(api_key \\ Application.get_env(:lexoffice, :api_key)) do
-    [
+    middleware = [
       {Tesla.Middleware.BaseUrl, "https://api.lexoffice.io"},
       {Tesla.Middleware.Timeout, timeout: 30_000},
-      {Tesla.Middleware.EncodeJson, engine: Poison, engine_opts: [keys: :atoms]},
+      {Tesla.Middleware.EncodeJson, engine: Poison},
       {Tesla.Middleware.Headers,
        [
          {"User-Agent", "Elixir"},
@@ -20,6 +20,7 @@ defmodule LexOffice.Connection do
          {"Content-Type", "application/json"}
        ]}
     ]
-    |> Tesla.client()
+
+    Tesla.client(middleware, {Tesla.Adapter.Hackney, [timeout: 60_000]})
   end
 end
