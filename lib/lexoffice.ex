@@ -180,7 +180,7 @@ defmodule LexOffice do
   - `{:error, info}` on failure
   """
   @spec get_invoice(String.t(), Tesla.Env.client() | nil) ::
-          {:ok, LexOffice.Model.Invoice.t()} | {:error, Tesla.Env.t()}
+          {:ok, LexOffice.Model.InvoiceDetailsResponse.t()} | {:error, Tesla.Env.t()}
   def get_invoice(id, client \\ Connection.new()) do
     %{}
     |> method(:get)
@@ -291,5 +291,46 @@ defmodule LexOffice do
       other ->
         other
     end
+  end
+
+  @doc """
+  List vouchers.
+
+  ## Parameters
+
+  - opts (KeywordList): [optional] Optional parameters
+    - :voucherType (String.t): Comma separated list of voucher-types, e.g. purchaseinvoice,invoice.
+    - :voucherStatus (String.t): Find vouchers by their voucherStatus, e.g. open.
+    - :page (integer()): The page to access..
+    - :size (integer()): The number of items to return per page.
+  - connection (LexOffice.Connection): [optional] Connection to server
+
+  ## Returns
+
+  - `{:ok, %LexOffice.Model.VoucherListResponse{}}` on success
+  - `{:error, info}` on failure
+  """
+  @spec list_vouchers(keyword(), Tesla.Env.client() | nil) ::
+          {:ok, LexOffice.Model.VoucherListResponse.t()} | {:error, Tesla.Env.t()}
+  def list_vouchers(opts \\ [], client \\ Connection.new()) do
+    optional_params = %{
+      :voucherType => :query,
+      :voucherStatus => :query,
+      :page => :query,
+      :size => :query
+    }
+
+    %{}
+    |> method(:get)
+    |> url("/v1/voucherlist")
+    |> add_optional_params(optional_params, opts)
+    |> Enum.into([])
+    |> (&Tesla.request(client, &1)).()
+    |> evaluate_response([
+      {200, %LexOffice.Model.VoucherListResponse{}},
+      {400, %LexOffice.Model.ErrorResponse{}},
+      {403, %LexOffice.Model.ErrorResponse{}},
+      {500, %LexOffice.Model.ErrorResponse{}}
+    ])
   end
 end
