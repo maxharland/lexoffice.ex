@@ -138,8 +138,7 @@ defmodule LexOffice.RequestBuilder do
       {:ok,
        body
        |> Base.decode64!()
-       |> :erlang.iolist_to_binary()
-       |> :erlang.binary_to_list()}
+       |> :erlang.iolist_to_binary()}
 
   def decode(%Tesla.Env{body: body}, struct), do: Poison.decode(body, as: struct)
 
