@@ -73,7 +73,7 @@ end
 
 defmodule LexOffice.Model.Contact.Company do
   @moduledoc """
-  Represents an Contact Company.
+  Represents a Contact Company.
   """
 
   @derive [Poison.Encoder]
@@ -100,7 +100,7 @@ end
 
 defmodule LexOffice.Model.Contact.Address do
   @moduledoc """
-  Represents an Contact Address.
+  Represents a Contact Address.
   """
 
   @derive [Poison.Encoder]
@@ -129,7 +129,7 @@ end
 
 defmodule LexOffice.Model.Contact.Addresses do
   @moduledoc """
-  Represents an Contact Address-Map.
+  Represents a Contact Address-Map.
   """
 
   @derive [Poison.Encoder]
@@ -142,4 +142,62 @@ defmodule LexOffice.Model.Contact.Addresses do
           :billing => list(LexOffice.Model.Contact.Address.t()),
           :shipping => list(LexOffice.Model.Contact.Address.t()) | nil
         }
+end
+
+defmodule LexOffice.Model.Contact.EmailAddresses do
+  @moduledoc """
+  Represents a Contacts EmailAddresses.
+  """
+
+  @derive [Poison.Encoder]
+  defstruct [
+    :business,
+    :office,
+    :private,
+    :other
+  ]
+
+  @type t :: %__MODULE__{
+          :business => list(String.t()) | nil,
+          :office => list(String.t()) | nil,
+          :private => list(String.t()) | nil,
+          :other => list(String.t()) | nil
+        }
+end
+
+defimpl Poison.Decoder, for: LexOffice.Model.Contact.EmailAddresses do
+  def decode(value, _options) do
+    value
+  end
+end
+
+defmodule LexOffice.Model.Contact.PhoneNumbers do
+  @moduledoc """
+  Represents a Contacts PhoneNumbers.
+  """
+
+  @derive [Poison.Encoder]
+  defstruct [
+    :business,
+    :office,
+    :mobile,
+    :private,
+    :fax,
+    :other
+  ]
+
+  @type t :: %__MODULE__{
+        :business => list(String.t()) | nil,
+        :office => list(String.t()) | nil,
+        :mobile => list(String.t()) | nil,
+        :private => list(String.t()) | nil,
+        :fax => list(String.t()) | nil,
+        :other => list(String.t()) | nil
+      }
+end
+
+defimpl Poison.Decoder, for: LexOffice.Model.Contact.PhoneNumbers do
+  def decode(value, _options) do
+    value
+  end
 end

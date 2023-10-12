@@ -8,14 +8,18 @@ defmodule LexOffice.Model.CreateContact do
     :roles,
     :company,
     :person,
-    :addresses
+    :addresses,
+    :emailAddresses,
+    :phoneNumbers
   ]
 
   @type t :: %__MODULE__{
           :roles => LexOffice.Model.Contact.Roles.t(),
           :company => LexOffice.Model.Contact.Company.t(),
           :person => LexOffice.Model.Contact.Person.t(),
-          :addresses => LexOffice.Model.Contact.Addresses.t()
+          :addresses => LexOffice.Model.Contact.Addresses.t(),
+          :emailAddresses => LexOffice.Model.Contact.EmailAddresses.t(),
+          :phoneNumbers => LexOffice.Model.Contact.PhoneNumbers.t()
         }
 end
 
@@ -28,5 +32,7 @@ defimpl Poison.Decoder, for: LexOffice.Model.CreateContact do
     |> deserialize(:company, :struct, LexOffice.Model.Contact.Company, options)
     |> deserialize(:person, :struct, LexOffice.Model.Contact.Person, options)
     |> deserialize(:addresses, :struct, LexOffice.Model.Contact.Addresses, options)
+    |> deserialize(:emailAddresses, :struct, LexOffice.Model.Contact.EmailAddresses, options)
+    |> deserialize(:phoneNumbers, :struct, LexOffice.Model.Contact.PhoneNumbers, options)
   end
 end
