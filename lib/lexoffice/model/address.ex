@@ -11,7 +11,8 @@ defmodule LexOffice.Model.Address do
     :supplement,
     :city,
     :zip,
-    :countryCode
+    :countryCode,
+    :contactId
   ]
 
   @type t :: %__MODULE__{
@@ -21,7 +22,8 @@ defmodule LexOffice.Model.Address do
           :supplement => String.t(),
           :city => String.t(),
           :zip => String.t(),
-          :countryCode => String.t()
+          :countryCode => String.t(),
+          :contactId => String.t()
         }
 end
 
